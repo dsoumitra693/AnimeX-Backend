@@ -4,11 +4,11 @@ import { Schema } from "mongoose"
 
 dotenv.config()
 
-export const generateToken = async (data: Schema.Types.ObjectId)
+export const generateToken = async (data: any)
     : Promise<string | Error> => {
     try {
         const token = jwt.sign(
-            data,
+            JSON.stringify(data),
             process.env.JWT_SECRET_KEY as string,
         )
 

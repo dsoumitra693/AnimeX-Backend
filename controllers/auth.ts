@@ -42,7 +42,7 @@ export const verifyOtp = asyncErrorHandler(
 
         if (isMatched) {
             const userObj = { id: user?._id as Schema.Types.ObjectId, name: user?.name, email: user?.email, phone: user?.phone, isSubscribed: user?.isSubscribed }
-            const token = await generateToken(userObj.id).catch(err => next(createHttpError(500, err)))
+            const token = await generateToken({id:userObj.id}).catch(err => next(createHttpError(500, err)))
             return res.send({
                 "msg": "user verified",
                 data: {

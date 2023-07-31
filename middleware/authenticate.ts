@@ -18,10 +18,10 @@ export const authenticate = asyncErrorHandler(
         // console.log(req.headers.authorization, token)
         if (token) {
             const userData = jwt.verify(token, process.env.JWT_SECRET_KEY!) as {
-                data:string
+                id:string
             }
-
-            const userId = userData.data
+            console.log(userData)
+            const userId = userData?.id
 
             const user: IUser | null = await User.findById({ _id: userId});
             if (user) {

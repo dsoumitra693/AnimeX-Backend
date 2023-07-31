@@ -33,7 +33,7 @@ exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
         user.password = hashedOtp;
         user === null || user === void 0 ? void 0 : user.save();
     }
-    res.json({ "msg": "otp generated" });
+    res.send({ "msg": "otp generated" });
 }));
 exports.verifyOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const phone = req.query.phone;
@@ -45,7 +45,7 @@ exports.verifyOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __await
     const isMatched = yield (0, password_1.compareOtp)(otp, hashedOtp);
     if (isMatched) {
         const userObj = { id: user === null || user === void 0 ? void 0 : user._id, name: user === null || user === void 0 ? void 0 : user.name, email: user === null || user === void 0 ? void 0 : user.email, phone: user === null || user === void 0 ? void 0 : user.phone, isSubscribed: user === null || user === void 0 ? void 0 : user.isSubscribed };
-        const token = yield (0, authToken_1.generateToken)(userObj.id).catch(err => next((0, http_errors_1.default)(500, err)));
+        const token = yield (0, authToken_1.generateToken)({ id: userObj.id }).catch(err => next((0, http_errors_1.default)(500, err)));
         return res.send({
             "msg": "user verified",
             data: {

@@ -24,7 +24,8 @@ exports.authenticate = (0, asyncErrorHandler_1.default)((req, res, next) => __aw
     // console.log(req.headers.authorization, token)
     if (token) {
         const userData = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET_KEY);
-        const userId = userData.data;
+        console.log(userData);
+        const userId = userData === null || userData === void 0 ? void 0 : userData.id;
         const user = yield User_1.default.findById({ _id: userId });
         if (user) {
             req.user = user;

@@ -41,7 +41,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const generateToken = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = jsonwebtoken_1.default.sign(data, process.env.JWT_SECRET_KEY);
+        const token = jsonwebtoken_1.default.sign(JSON.stringify(data), process.env.JWT_SECRET_KEY);
         return token;
     }
     catch (error) {
