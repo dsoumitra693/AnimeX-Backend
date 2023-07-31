@@ -21,10 +21,8 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.authenticate = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const token = req.headers.authorization;
-    // console.log(req.headers.authorization, token)
     if (token) {
         const userData = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET_KEY);
-        console.log(userData);
         const userId = userData === null || userData === void 0 ? void 0 : userData.id;
         const user = yield User_1.default.findById({ _id: userId });
         if (user) {

@@ -24,7 +24,7 @@ exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
     const otp = (0, sendingSms_1.createOtp)();
     const hashedOtp = yield (0, password_1.encOtp)(otp);
     const user = yield User_1.default.findOne({ phone });
-    // await sendOtp(phone, otp)
+    yield (0, sendingSms_1.sendOtp)(phone, otp);
     if (user == null) {
         const newUser = new User_1.default({ phone, password: hashedOtp });
         yield newUser.save();
