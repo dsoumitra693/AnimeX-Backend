@@ -25,7 +25,7 @@ export const generateOtp = asyncErrorHandler(
         }
 
 
-        res.json({ "msg": "otp generated" })
+        res.send({ "msg": "otp generated" })
     })
 export const verifyOtp = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
