@@ -4,8 +4,12 @@ import connectToDB from './utils/db'
 import cors from 'cors'
 import userRouter from './routes/user'
 import { authenticate } from './middleware/authenticate'
+import dotenv from 'dotenv'
+
+dotenv.config()
 const app = express()
-const port = 3000
+
+const port = process.env.PORT ||3000
 
 //middlewares 
 app.use(express.json());
