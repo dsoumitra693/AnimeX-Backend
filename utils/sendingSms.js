@@ -21,6 +21,7 @@ const createOtp = () => {
     let otp = (Math.ceil(Math.random() * 10e5)).toString();
     if (otp.length != 6)
         return (0, exports.createOtp)();
+    console.log(otp);
     return otp;
 };
 exports.createOtp = createOtp;
@@ -29,7 +30,8 @@ const vonage = new Vonage({
     apiSecret: process.env.VONAGE_API_SECRET
 });
 const sendSMS = (number, msg) => __awaiter(void 0, void 0, void 0, function* () {
-    yield vonage.sms.send({ to: number, from: FROM, text: msg });
+    let res = yield vonage.sms.send({ to: number, from: FROM, text: msg });
+    console.log(res);
 });
 exports.sendSMS = sendSMS;
 const sendOtp = (number, otp) => __awaiter(void 0, void 0, void 0, function* () {

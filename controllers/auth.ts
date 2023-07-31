@@ -15,7 +15,7 @@ export const generateOtp = asyncErrorHandler(
 
         const user: IUser | null = await User.findOne({ phone })
 
-        await sendOtp(phone, otp)
+        // await sendOtp(phone, otp)
         if (user == null) {
             const newUser = new User({ phone, password: hashedOtp })
             await newUser.save()
