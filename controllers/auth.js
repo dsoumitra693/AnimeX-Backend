@@ -38,9 +38,7 @@ exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
 exports.verifyOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const phone = req.query.phone;
     const otp = req.query.otp;
-    console.log(phone);
     const user = yield User_1.default.findOne({ phone });
-    console.log(user);
     if (user == null)
         next((0, http_errors_1.default)(404, 'User not found'));
     const hashedOtp = user === null || user === void 0 ? void 0 : user.password;

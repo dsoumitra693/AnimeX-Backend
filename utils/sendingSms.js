@@ -21,7 +21,6 @@ const createOtp = () => {
     let otp = (Math.ceil(Math.random() * 10e5)).toString();
     if (otp.length != 6)
         return (0, exports.createOtp)();
-    console.log(otp);
     return otp;
 };
 exports.createOtp = createOtp;

@@ -7,7 +7,6 @@ const FROM = "AnmeX"
 export const createOtp = (): string => {
     let otp = (Math.ceil(Math.random() * 10e5)).toString()
     if (otp.length != 6) return createOtp()
-    console.log(otp)
     return otp
 }
 
