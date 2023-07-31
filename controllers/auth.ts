@@ -31,8 +31,10 @@ export const verifyOtp = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
         const phone = req.query.phone as string
         const otp = req.query.otp as string
+        console.log(phone)
 
         const user: IUser | null = await User.findOne({ phone })
+        console.log(user)
 
         if (user == null) next(createHttpError(404, 'User not found'));
 
