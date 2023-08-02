@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
-import { removeUndefinedVaules } from "../utils/removeUndefinedVaules";
 import User, { IUser } from "../model/User";
 import createHttpError from 'http-errors'
+import { removeUndefinedVaules } from "../utils/removeUndefinedVaules";
 
 
 export const updateUserDetails = asyncErrorHandler(

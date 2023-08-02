@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const removeUndefinedVaules_1 = require("../utils/removeUndefinedVaules");
 const User_1 = __importDefault(require("../model/User"));
 const http_errors_1 = __importDefault(require("http-errors"));
+const removeUndefinedVaules_1 = require("../utils/removeUndefinedVaules");
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, isSubscribed, phone } = req.query;
     let params = (0, removeUndefinedVaules_1.removeUndefinedVaules)({ name, email, isSubscribed });
