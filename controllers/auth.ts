@@ -52,5 +52,4 @@ export const verifyOtp = asyncErrorHandler(
             }).status(200)
         }
         next(createHttpError(400, "otp did not match"))
-
     })
