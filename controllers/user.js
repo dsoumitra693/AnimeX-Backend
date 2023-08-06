@@ -15,10 +15,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWatchList = exports.deleteWatchList = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const User_1 = __importDefault(require("../model/User"));
-const removeUndefinedVaules_1 = require("../utils/removeUndefinedVaules");
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, isSubscribed, phone } = req.query;
-    let params = (0, removeUndefinedVaules_1.removeUndefinedVaules)({ name, email, isSubscribed });
+    let params = {
+        name, email, isSubscribed, phone
+    };
     let user = yield User_1.default.findOneAndUpdate({ phone }, {
         $set: params
     });

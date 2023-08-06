@@ -2,14 +2,15 @@ import { Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
 import User, { IUser } from "../model/User";
 import createHttpError from 'http-errors'
-import { removeUndefinedVaules } from "../utils/removeUndefinedVaules";
 import { IRequest } from "../middleware/authenticate";
 
 
 export const updateUserDetails = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
         const { name, email, isSubscribed, phone } = req.query
-        let params = removeUndefinedVaules({ name, email, isSubscribed })
+        let params = {
+            name, email, isSubscribed, phone
+        }
         let user: IUser | null = await User.findOneAndUpdate(
             { phone },
             {
