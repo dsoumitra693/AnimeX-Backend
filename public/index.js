@@ -19,7 +19,7 @@ app.use((0, cors_1.default)());
 // routes
 app.use("/auth", auth_1.default);
 app.use("/user", authenticate_1.authenticate, user_1.default);
-app.get('/', (req, res) => res.send("Welcome to AnimeX Server"));
+app.get('/', (req, res) => res.send("Welcome to AnimeX-Server"));
 // connect to db 
 (0, db_1.default)();
 //app litening

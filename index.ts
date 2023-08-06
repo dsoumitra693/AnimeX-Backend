@@ -17,7 +17,7 @@ app.use(cors())
 // routes
 app.use("/auth", authRouter)
 app.use("/user", authenticate, userRouter)
-app.get('/', (req, res) => res.send("Welcome to AnimeX Server"))
+app.get('/', (req, res) => res.send("Welcome to AnimeX-Server"))
 
 // connect to db 
 connectToDB()
