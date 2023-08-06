@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
 import User, { IUser } from "../model/User";
 import createHttpError from 'http-errors'
@@ -7,7 +7,7 @@ import { IRequest } from "../middleware/authenticate";
 
 
 export const updateUserDetails = asyncErrorHandler(
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req: IRequest, res: Response, next: NextFunction) => {
         const { name, email, isSubscribed, phone } = req.query
         let params = removeUndefinedVaules({ name, email, isSubscribed })
         let user: IUser | null = await User.findOneAndUpdate(
@@ -15,9 +15,20 @@ export const updateUserDetails = asyncErrorHandler(
             {
                 $set: params
             })
-        if (user == null) next(createHttpError(404, 'User not found'));
+        if (user == null) return res.status(403).send({ msg: "User not found" })
 
         user?.save()
+
+        const userWithNoPass = { ...user?.toObject(), password: "" }
+        res.send({ userWithNoPass }).status(200)
+
+    })
+export const getUserDetails = asyncErrorHandler(
+    async (req: IRequest, res: Response, next: NextFunction) => {
+
+        const reqUserId = req.userId
+        let user: IUser | null = await User.findOne({ _id: reqUserId })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
 
         const userWithNoPass = { ...user?.toObject(), password: "" }
         res.send({ userWithNoPass }).status(200)
@@ -33,7 +44,7 @@ export const updateFavAnime = asyncErrorHandler(
 
         const user: IUser | null = await User.findOne({ _id: userId })
 
-        if (user == null) return res.status(404).send({ msg: "User not found" })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
         const found = user.favouriteAnime.some(el => el?.animeId === animeId);
         if (!found) {
             user.favouriteAnime.push({ animeId, name, imgUrl });
@@ -49,7 +60,7 @@ export const deleteFavAnime = asyncErrorHandler(
         const { animeId } = req.body
 
         const user: IUser | null = await User.findOne({ _id: userId })
-        if (user == null) return res.status(404).send({ msg: "User not found" })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
         const found = user.favouriteAnime.some(el => el?.animeId === animeId);
         if (found) {
             user.favouriteAnime = user.favouriteAnime.filter(item => item.animeId != animeId)
@@ -82,7 +93,7 @@ export const updateWatchList = asyncErrorHandler(
 
         const user: IUser | null = await User.findOne({ _id: userId })
 
-        if (user == null) return res.status(404).send({ msg: "User not found" })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
         const found = user.watchList.some(el => el?.animeId === animeId);
         if (!found) {
             user.watchList.push({ animeId, name, imgUrl });
@@ -98,7 +109,7 @@ export const deleteWatchList = asyncErrorHandler(
         const { animeId } = req.body
 
         const user: IUser | null = await User.findOne({ _id: userId })
-        if (user == null) return res.status(404).send({ msg: "User not found" })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
         const found = user.watchList.some(el => el?.animeId === animeId);
         if (found) {
             user.watchList = user.watchList.filter(item => item.animeId != animeId)

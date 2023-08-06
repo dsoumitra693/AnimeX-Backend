@@ -3,6 +3,7 @@ import {
     deleteFavAnime,
     deleteWatchList,
     getFavAnime,
+    getUserDetails,
     getWatchList,
     updateFavAnime,
     updateUserDetails,
@@ -11,6 +12,7 @@ import {
 
 const userRouter = express.Router()
 
+userRouter.put('/', getUserDetails)
 userRouter.put('/update', updateUserDetails)
 userRouter.put('/fav-anime', updateFavAnime)
 userRouter.get('/fav-anime', getFavAnime)
