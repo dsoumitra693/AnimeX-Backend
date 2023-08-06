@@ -26,7 +26,7 @@ exports.authenticate = (0, asyncErrorHandler_1.default)((req, res, next) => __aw
         const userId = userData === null || userData === void 0 ? void 0 : userData.id;
         const user = yield User_1.default.findById({ _id: userId });
         if (user) {
-            req.user = user;
+            req.userId = user._id;
             return next();
         }
     }

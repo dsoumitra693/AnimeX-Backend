@@ -7,12 +7,12 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-export interface IRequset extends Request {
-    user?: IUser
+export interface IRequest extends Request {
+    userId?: string
 }
 
 export const authenticate = asyncErrorHandler(
-    async (req: IRequset, res: Response, next: NextFunction) => {
+    async (req: IRequest, res: Response, next: NextFunction) => {
         const token = req.headers.authorization;
         if (token) {
             const userData = jwt.verify(token, process.env.JWT_SECRET_KEY!) as {
@@ -22,7 +22,7 @@ export const authenticate = asyncErrorHandler(
 
             const user: IUser | null = await User.findById({ _id: userId});
             if (user) {
-                req.user = user;
+                req.userId = user._id;
                 return next();
             }
         } else {
