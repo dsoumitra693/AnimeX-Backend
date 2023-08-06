@@ -17,7 +17,15 @@ export const generateOtp = asyncErrorHandler(
 
         await sendOtp(phone, otp)
         if (user == null) {
-            const newUser = new User({ phone, password: hashedOtp })
+            const newUser = new User({
+                phone,
+                password: hashedOtp,
+                name: "",
+                email: "",
+                isSubscribed: false,
+                favouriteAnime: [],
+                watchList: []
+            })
             await newUser.save()
         } else {
             user.password = hashedOtp as string
@@ -41,8 +49,16 @@ export const verifyOtp = asyncErrorHandler(
         const isMatched = await compareOtp(otp, hashedOtp)
 
         if (isMatched) {
-            const userObj = { id: user?._id as Schema.Types.ObjectId, name: user?.name, email: user?.email, phone: user?.phone, isSubscribed: user?.isSubscribed }
-            const token = await generateToken({id:userObj.id}).catch(err => next(createHttpError(500, err)))
+            const userObj = {
+                id: user?._id as Schema.Types.ObjectId,
+                name: user?.name,
+                email: user?.email,
+                phone: user?.phone,
+                isSubscribed: user?.isSubscribed,
+                favouriteAnime: user?.favouriteAnime,
+                watchList: user?.watchList
+            }
+            const token = await generateToken({ id: userObj.id }).catch(err => next(createHttpError(500, err)))
             return res.send({
                 "msg": "user verified",
                 data: {

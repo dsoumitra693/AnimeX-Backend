@@ -26,7 +26,15 @@ exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
     const user = yield User_1.default.findOne({ phone });
     yield (0, sendingSms_1.sendOtp)(phone, otp);
     if (user == null) {
-        const newUser = new User_1.default({ phone, password: hashedOtp });
+        const newUser = new User_1.default({
+            phone,
+            password: hashedOtp,
+            name: "",
+            email: "",
+            isSubscribed: false,
+            favouriteAnime: [],
+            watchList: []
+        });
         yield newUser.save();
     }
     else {
@@ -44,7 +52,15 @@ exports.verifyOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __await
     const hashedOtp = user === null || user === void 0 ? void 0 : user.password;
     const isMatched = yield (0, password_1.compareOtp)(otp, hashedOtp);
     if (isMatched) {
-        const userObj = { id: user === null || user === void 0 ? void 0 : user._id, name: user === null || user === void 0 ? void 0 : user.name, email: user === null || user === void 0 ? void 0 : user.email, phone: user === null || user === void 0 ? void 0 : user.phone, isSubscribed: user === null || user === void 0 ? void 0 : user.isSubscribed };
+        const userObj = {
+            id: user === null || user === void 0 ? void 0 : user._id,
+            name: user === null || user === void 0 ? void 0 : user.name,
+            email: user === null || user === void 0 ? void 0 : user.email,
+            phone: user === null || user === void 0 ? void 0 : user.phone,
+            isSubscribed: user === null || user === void 0 ? void 0 : user.isSubscribed,
+            favouriteAnime: user === null || user === void 0 ? void 0 : user.favouriteAnime,
+            watchList: user === null || user === void 0 ? void 0 : user.watchList
+        };
         const token = yield (0, authToken_1.generateToken)({ id: userObj.id }).catch(err => next((0, http_errors_1.default)(500, err)));
         return res.send({
             "msg": "user verified",
