@@ -15,8 +15,8 @@
     "mongoose": "^7.4.1"
   },
   "scripts": {
-    "build": "node index.js",
-    "start": "node index.js",
+    "build": "npx tsc",
+    "start": "node dist/index.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\""
   },
   "devDependencies": {
