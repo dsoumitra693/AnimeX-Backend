@@ -26,7 +26,7 @@ export const authenticate = asyncErrorHandler(
                 return next();
             }
         } else {
-            return next(createHttpError(404, 'Token not found'));
+            return next(createHttpError(403, 'Token not found'));
         }
     }
 )

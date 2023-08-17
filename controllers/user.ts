@@ -1,7 +1,6 @@
 import { Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
 import User, { IUser } from "../model/User";
-import createHttpError from 'http-errors'
 import { IRequest } from "../middleware/authenticate";
 
 

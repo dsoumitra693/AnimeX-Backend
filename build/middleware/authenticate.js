@@ -31,6 +31,6 @@ exports.authenticate = (0, asyncErrorHandler_1.default)((req, res, next) => __aw
         }
     }
     else {
-        return next((0, http_errors_1.default)(404, 'Token not found'));
+        return next((0, http_errors_1.default)(403, 'Token not found'));
     }
 }));
