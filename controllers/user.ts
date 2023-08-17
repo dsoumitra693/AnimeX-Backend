@@ -29,7 +29,7 @@ export const getUserDetails = asyncErrorHandler(
         console.log('requested')
         const reqUserId = req.userId
         let user: IUser | null = await User.findOne({ _id: reqUserId })
-        if (user == null) return res.status(403).send({ msg: "User not found" })
+        if (user == null) return res.status(403).json("User not found")
 
         const userWithNoPass = { ...user?.toObject(), password: "" }
         res.send({ userWithNoPass }).status(200)

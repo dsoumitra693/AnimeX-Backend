@@ -34,7 +34,7 @@ exports.getUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __
     const reqUserId = req.userId;
     let user = yield User_1.default.findOne({ _id: reqUserId });
     if (user == null)
-        return res.status(403).send({ msg: "User not found" });
+        return res.status(403).json("User not found");
     const userWithNoPass = Object.assign(Object.assign({}, user === null || user === void 0 ? void 0 : user.toObject()), { password: "" });
     res.send({ userWithNoPass }).status(200);
 }));
