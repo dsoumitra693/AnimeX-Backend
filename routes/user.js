@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_1 = require("../controllers/user");
 const userRouter = express_1.default.Router();
-userRouter.put('/', user_1.getUserDetails);
+userRouter.get('/', user_1.getUserDetails);
 userRouter.put('/update', user_1.updateUserDetails);
 userRouter.put('/fav-anime', user_1.updateFavAnime);
 userRouter.get('/fav-anime', user_1.getFavAnime);

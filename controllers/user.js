@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWatchList = exports.deleteWatchList = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
+exports.getWatchList = exports.deleteWatchList = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.testGetUserDetails = exports.getUserDetails = exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const User_1 = __importDefault(require("../model/User"));
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -30,13 +30,20 @@ exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) =>
     res.send({ userWithNoPass }).status(200);
 }));
 exports.getUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('requested');
     const reqUserId = req.userId;
     let user = yield User_1.default.findOne({ _id: reqUserId });
     if (user == null)
-        return res.status(403).send({ msg: "User not found" });
+        return res.status(403).json("User not found");
     const userWithNoPass = Object.assign(Object.assign({}, user === null || user === void 0 ? void 0 : user.toObject()), { password: "" });
     res.send({ userWithNoPass }).status(200);
 }));
+const testGetUserDetails = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('requested');
+    const reqUserId = req.userId;
+    res.send({ reqUserId }).status(200);
+});
+exports.testGetUserDetails = testGetUserDetails;
 exports.updateFavAnime = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
     const animeId = req.body.animeId;

@@ -25,13 +25,12 @@ export const updateUserDetails = asyncErrorHandler(
     })
 export const getUserDetails = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
-        console.log('requested')
         const reqUserId = req.userId
         let user: IUser | null = await User.findOne({ _id: reqUserId })
         if (user == null) return res.status(403).json("User not found")
 
         const userWithNoPass = { ...user?.toObject(), password: "" }
-        res.send({ userWithNoPass }).status(200)
+        res.send({ user: userWithNoPass }).status(200)
 
     })
 

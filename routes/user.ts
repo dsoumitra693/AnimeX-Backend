@@ -12,7 +12,7 @@ import {
 
 const userRouter = express.Router()
 
-userRouter.put('/', getUserDetails)
+userRouter.get('/', getUserDetails)
 userRouter.put('/update', updateUserDetails)
 userRouter.put('/fav-anime', updateFavAnime)
 userRouter.get('/fav-anime', getFavAnime)

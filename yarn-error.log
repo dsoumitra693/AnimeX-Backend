@@ -1,33 +1,30 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\PC-13\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js init
+  /home/soumitrad/nodejs/bin/node /usr/bin/yarn add @vonage/server-sdk axios bcrypt cors dotenv express express-jwt jsonwebtoken mongoose
 
 PATH: 
-  C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\MinGW\bin;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\PC-13\AppData\Roaming\npm\node_modules\yarn\bin;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Java\jdk20\bin;C:\Users\PC-13\AppData\Local\Programs\Python\Python311\Scripts\;C:\Users\PC-13\AppData\Local\Programs\Python\Python311\;C:\Users\PC-13\AppData\Local\Programs\Python\Python311;c:\users\PC-13\appdata\local\yarn\bin;C:\Users\PC-13\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\PC-13\.npm;C:\Users\PC-13\AppData\Roaming\npm;C:\Program Files\Java\jdk-20\bin\
+  /home/soumitrad/nodejs/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl
 
 Yarn version: 
   1.22.19
 
 Node version: 
-  18.16.1
+  18.17.1
 
 Platform: 
-  win32 x64
+  linux x64
 
 Trace: 
-  Error: canceled
-      at Interface.<anonymous> (C:\Users\PC-13\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:137150:13)
-      at Interface.emit (node:events:513:28)
-      at [_ttyWrite] [as _ttyWrite] (node:internal/readline/interface:1131:18)
-      at ReadStream.onkeypress (node:internal/readline/interface:270:20)
-      at ReadStream.emit (node:events:513:28)
-      at emitKeys (node:internal/readline/utils:357:14)
-      at emitKeys.next (<anonymous>)
-      at ReadStream.onData (node:internal/readline/emitKeypressEvents:64:36)
-      at ReadStream.emit (node:events:513:28)
-      at addChunk (node:internal/streams/readable:324:12)
+  Error: EPERM: operation not permitted, symlink '../../../../nopt/bin/nopt.js' -> '/run/media/soumitrad/SoumoSD/AnimeX-Backend/node_modules/@mapbox/node-pre-gyp/node_modules/.bin/nopt'
 
 npm manifest: 
-  No manifest
+  {
+    "name": "AnimeX-Backend",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/dsoumitra693/AnimeX-Backend.git",
+    "author": "dsoumitra693 <dsoumitra693@gmail.com>",
+    "license": "MIT"
+  }
 
 yarn manifest: 
   No manifest
