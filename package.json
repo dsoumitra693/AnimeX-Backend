@@ -15,7 +15,7 @@
         "mongoose": "^7.4.1"
     },
     "scripts": {
-        "start": "tsc && nodemon index.ts",
+        "start": "tsc && cd build && nodemon index",
         "build": "rimraf build && tsc",
         "ts.check": "tsc --project tsconfig.json",
         "add-build": "git add build",

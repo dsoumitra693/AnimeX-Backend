@@ -24,4 +24,4 @@ app.get('/', (req, res) => res.send("Welcome to AnimeX-Server"))
 connectToDB()
 
 //app litening
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`App listening on port ${port}!`))
