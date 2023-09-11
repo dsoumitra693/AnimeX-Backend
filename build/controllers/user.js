@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWatchList = exports.deleteWatchList = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
+exports.getWatchList = exports.deleteWatchList = exports.testUpdateWatchList = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const User_1 = __importDefault(require("../model/User"));
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -82,16 +82,23 @@ exports.updateWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => _
     const animeId = req.body.animeId;
     const name = req.body.name;
     const imgUrl = req.body.imgUrl;
+    console.log({ animeId, name, imgUrl });
     const user = yield User_1.default.findOne({ _id: userId });
     if (user == null)
         return res.status(403).send({ msg: "User not found" });
     const found = user.watchList.some(el => (el === null || el === void 0 ? void 0 : el.animeId) === animeId);
     if (!found) {
         user.watchList.push({ animeId, name, imgUrl });
+        console.log(user);
         yield user.save();
         return res.send({ watchList: user === null || user === void 0 ? void 0 : user.watchList }).status(200);
     }
     return res.send({ watchList: user === null || user === void 0 ? void 0 : user.watchList }).status(200);
+}));
+exports.testUpdateWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.userId;
+    console.log(req.body);
+    res.send(200);
 }));
 exports.deleteWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;

@@ -16,6 +16,7 @@
     },
     "scripts": {
         "start": "tsc && cd build && nodemon index",
+        "dev": "tsc && nodemon index.ts",
         "build": "rimraf build && tsc",
         "ts.check": "tsc --project tsconfig.json",
         "add-build": "git add build",

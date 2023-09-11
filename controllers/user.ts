@@ -53,6 +53,8 @@ export const updateFavAnime = asyncErrorHandler(
         return res.send({ favouriteAnime: user?.favouriteAnime }).status(200)
     }
 )
+
+
 export const deleteFavAnime = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
         const userId = req.userId
@@ -89,19 +91,28 @@ export const updateWatchList = asyncErrorHandler(
         const animeId = req.body.animeId as string
         const name = req.body.name as string
         const imgUrl = req.body.imgUrl as string
-
+        console.log({ animeId, name, imgUrl })
         const user: IUser | null = await User.findOne({ _id: userId })
 
         if (user == null) return res.status(403).send({ msg: "User not found" })
         const found = user.watchList.some(el => el?.animeId === animeId);
         if (!found) {
             user.watchList.push({ animeId, name, imgUrl });
+            console.log(user)
             await user.save()
             return res.send({ watchList: user?.watchList }).status(200)
         }
         return res.send({ watchList: user?.watchList }).status(200)
     }
 )
+export const testUpdateWatchList = asyncErrorHandler(
+    async (req: IRequest, res: Response, next: NextFunction) => {
+        const userId = req.userId
+        console.log(req.body)
+        res.send(200)
+    }
+)
+
 export const deleteWatchList = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
         const userId = req.userId

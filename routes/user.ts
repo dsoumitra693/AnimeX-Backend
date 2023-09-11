@@ -7,7 +7,8 @@ import {
     getWatchList,
     updateFavAnime,
     updateUserDetails,
-    updateWatchList
+    updateWatchList,
+    testUpdateWatchList
 } from '../controllers/user'
 
 const userRouter = express.Router()
@@ -19,6 +20,8 @@ userRouter.get('/fav-anime', getFavAnime)
 userRouter.delete('/fav-anime', deleteFavAnime)
 
 userRouter.put('/watch-list', updateWatchList)
+// userRouter.put('/watch-list', testUpdateWatchList)
+
 userRouter.get('/watch-list', getWatchList)
 userRouter.delete('/watch-list', deleteWatchList)
 
