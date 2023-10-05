@@ -3,8 +3,7 @@ import { generateOtp, verifyOtp } from "../controllers/auth"
 
 const authRouter = express.Router()
 
-authRouter.post('/otp/generate', generateOtp)
-authRouter.post('/otp/verify',verifyOtp)
-// authRouter.delete('user/logout', logoutUser)
+authRouter.get('/otp/generate', generateOtp)
+authRouter.post('/otp/verify', verifyOtp)
 
 export default authRouter

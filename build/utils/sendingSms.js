@@ -30,7 +30,7 @@ const vonage = new Vonage({
 });
 const sendSMS = (number, msg) => __awaiter(void 0, void 0, void 0, function* () {
     let res = yield vonage.sms.send({ to: number, from: FROM, text: msg });
-    console.log(res);
+    console.log("this is response", res);
 });
 exports.sendSMS = sendSMS;
 const sendOtp = (number, otp) => __awaiter(void 0, void 0, void 0, function* () {

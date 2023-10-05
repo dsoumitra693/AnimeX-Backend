@@ -19,6 +19,7 @@ dotenv_1.default.config();
 const connectToDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const uri = process.env.MONGO_URI;
+        console.log(uri);
         yield mongoose_1.default.connect(uri);
         console.log("connected to mongodb");
     }

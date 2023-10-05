@@ -18,7 +18,7 @@ const vonage = new Vonage({
 
 export const sendSMS = async (number: string, msg: string) => {
     let res = await vonage.sms.send({ to: number, from: FROM, text: msg })
-    console.log(res)
+    console.log("this is response", res)
 }
 
 export const sendOtp = async (number: string, otp: string) => {
