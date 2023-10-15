@@ -92,7 +92,6 @@ export const updateWatchList = asyncErrorHandler(
         const animeId = req.body.animeId as string
         const name = req.body.name as string
         const imgUrl = req.body.imgUrl as string
-        console.log({ animeId, name, imgUrl })
         const user: IUser | null = await User.findOne({ _id: userId })
 
         if (user == null) return res.status(403).send({ msg: "User not found" })

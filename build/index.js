@@ -17,11 +17,15 @@ const port = process.env.PORT || 5000;
 //middlewares 
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
-app.use(body_parser_1.default.json({ limit: '50mb' }));
+app.use(body_parser_1.default.json({
+    limit: '50mb',
+    type: 'application/octet-stream'
+}));
 app.use(body_parser_1.default.urlencoded({
     limit: '50mb',
-    extended: true,
-    parameterLimit: 50000
+    extended: false,
+    parameterLimit: 50000,
+    type: "application/octet-stream"
 }));
 // routes
 app.use("/auth", auth_1.default);

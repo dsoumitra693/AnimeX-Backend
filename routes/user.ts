@@ -21,11 +21,11 @@ userRouter.get('/fav-anime', getFavAnime)
 userRouter.delete('/fav-anime', deleteFavAnime)
 
 userRouter.put('/watch-list', updateWatchList)
-// userRouter.put('/watch-list', testUpdateWatchList)
 
 userRouter.get('/watch-list', getWatchList)
 userRouter.delete('/watch-list', deleteWatchList)
 
 userRouter.post('/upload/profile-img', uploadProfileImg)
 userRouter.delete('/delete/profile-img', deleteProfileImg)
+
 export default userRouter

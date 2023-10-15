@@ -84,7 +84,6 @@ exports.updateWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => _
     const animeId = req.body.animeId;
     const name = req.body.name;
     const imgUrl = req.body.imgUrl;
-    console.log({ animeId, name, imgUrl });
     const user = yield User_1.default.findOne({ _id: userId });
     if (user == null)
         return res.status(403).send({ msg: "User not found" });
