@@ -5,6 +5,7 @@ export interface IUser extends Document {
     phone: string;
     password: string;
     name: string;
+    profileImgUrl: string;
     isSubscribed: boolean;
     favouriteAnime: Array<IAnime>;
     watchList: Array<IAnime>;

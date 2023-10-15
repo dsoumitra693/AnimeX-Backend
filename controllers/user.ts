@@ -2,7 +2,8 @@ import { Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
 import User, { IUser } from "../model/User";
 import { IRequest } from "../middleware/authenticate";
-
+import { uploadImage } from "../utils/imageUpload";
+import { v4 as uuidv4 } from 'uuid';
 
 export const updateUserDetails = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
@@ -105,11 +106,43 @@ export const updateWatchList = asyncErrorHandler(
         return res.send({ watchList: user?.watchList }).status(200)
     }
 )
-export const testUpdateWatchList = asyncErrorHandler(
+
+export const uploadProfileImg = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
         const userId = req.userId
-        console.log(req.body)
-        res.send(200)
+        const profileImg = req.body.profileImg as string
+        const imgId = uuidv4()
+        let imgUrl
+        if (!!profileImg) {
+            imgUrl = await uploadImage(profileImg, imgId)
+        }
+        let user: IUser | null = await User.findOneAndUpdate(
+            { _id: userId },
+            {
+                $set: { profileImgUrl: imgUrl }
+            })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
+
+        user?.save()
+        res.send({ profileImg: imgUrl }).status(200)
+    }
+)
+
+export const deleteProfileImg = asyncErrorHandler(
+    async (req: IRequest, res: Response, next: NextFunction) => {
+        const defaultProfileImg = "https://res.cloudinary.com/dkbzrakzu/image/upload/v1696572283/923e0b34-89fe-47a7-8270-54f8c1fd6f0c.png"
+        const userId = req.userId
+        let user: IUser | null = await User.findOneAndUpdate(
+            { _id: userId },
+            {
+                $set: {
+                    profileImg: defaultProfileImg
+                }
+            })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
+
+        user?.save()
+        res.send({ profileImg: defaultProfileImg }).status(200)
     }
 )
 

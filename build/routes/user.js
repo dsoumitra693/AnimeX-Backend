@@ -15,4 +15,6 @@ userRouter.put('/watch-list', user_1.updateWatchList);
 // userRouter.put('/watch-list', testUpdateWatchList)
 userRouter.get('/watch-list', user_1.getWatchList);
 userRouter.delete('/watch-list', user_1.deleteWatchList);
+userRouter.post('/upload/profile-img', user_1.uploadProfileImg);
+userRouter.delete('/delete/profile-img', user_1.deleteProfileImg);
 exports.default = userRouter;

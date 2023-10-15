@@ -12,9 +12,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWatchList = exports.deleteWatchList = exports.testUpdateWatchList = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
+exports.getWatchList = exports.deleteWatchList = exports.deleteProfileImg = exports.uploadProfileImg = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const User_1 = __importDefault(require("../model/User"));
+const imageUpload_1 = require("../utils/imageUpload");
+const uuid_1 = require("uuid");
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, email, isSubscribed, phone } = req.query;
     let params = {
@@ -95,10 +97,34 @@ exports.updateWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => _
     }
     return res.send({ watchList: user === null || user === void 0 ? void 0 : user.watchList }).status(200);
 }));
-exports.testUpdateWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+exports.uploadProfileImg = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
-    console.log(req.body);
-    res.send(200);
+    const profileImg = req.body.profileImg;
+    const imgId = (0, uuid_1.v4)();
+    let imgUrl;
+    if (!!profileImg) {
+        imgUrl = yield (0, imageUpload_1.uploadImage)(profileImg, imgId);
+    }
+    let user = yield User_1.default.findOneAndUpdate({ _id: userId }, {
+        $set: { profileImgUrl: imgUrl }
+    });
+    if (user == null)
+        return res.status(403).send({ msg: "User not found" });
+    user === null || user === void 0 ? void 0 : user.save();
+    res.send({ profileImg: imgUrl }).status(200);
+}));
+exports.deleteProfileImg = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const defaultProfileImg = "https://res.cloudinary.com/dkbzrakzu/image/upload/v1696572283/923e0b34-89fe-47a7-8270-54f8c1fd6f0c.png";
+    const userId = req.userId;
+    let user = yield User_1.default.findOneAndUpdate({ _id: userId }, {
+        $set: {
+            profileImg: defaultProfileImg
+        }
+    });
+    if (user == null)
+        return res.status(403).send({ msg: "User not found" });
+    user === null || user === void 0 ? void 0 : user.save();
+    res.send({ profileImg: defaultProfileImg }).status(200);
 }));
 exports.deleteWatchList = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;

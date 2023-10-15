@@ -8,7 +8,8 @@ import {
     updateFavAnime,
     updateUserDetails,
     updateWatchList,
-    testUpdateWatchList
+    uploadProfileImg,
+    deleteProfileImg
 } from '../controllers/user'
 
 const userRouter = express.Router()
@@ -25,5 +26,6 @@ userRouter.put('/watch-list', updateWatchList)
 userRouter.get('/watch-list', getWatchList)
 userRouter.delete('/watch-list', deleteWatchList)
 
-
+userRouter.post('/upload/profile-img', uploadProfileImg)
+userRouter.delete('/delete/profile-img', deleteProfileImg)
 export default userRouter

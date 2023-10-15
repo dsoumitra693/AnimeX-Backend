@@ -8,7 +8,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export interface IRequest extends Request {
-    userId?: string
+    userId?: string,
+
 }
 
 export const authenticate = asyncErrorHandler(
@@ -16,11 +17,11 @@ export const authenticate = asyncErrorHandler(
         const token = req.headers.authorization;
         if (token) {
             const userData = jwt.verify(token, process.env.JWT_SECRET_KEY!) as {
-                id:string
+                id: string
             }
             const userId = userData?.id
 
-            const user: IUser | null = await User.findById({ _id: userId});
+            const user: IUser | null = await User.findById({ _id: userId });
             if (user) {
                 req.userId = user._id;
                 return next();
