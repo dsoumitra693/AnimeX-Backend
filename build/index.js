@@ -18,7 +18,11 @@ const port = process.env.PORT || 5000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json({ limit: '50mb' }));
-app.use(body_parser_1.default.urlencoded({ limit: '50mb', extended: true }));
+app.use(body_parser_1.default.urlencoded({
+    limit: '50mb',
+    extended: true,
+    parameterLimit: 50000
+}));
 // routes
 app.use("/auth", auth_1.default);
 app.use("/user", authenticate_1.authenticate, user_1.default);
