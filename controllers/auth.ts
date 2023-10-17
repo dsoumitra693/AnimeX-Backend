@@ -6,6 +6,9 @@ import asyncErrorHandler from "../utils/asyncErrorHandler";
 import createHttpError from 'http-errors';
 import { generateToken } from "../utils/authToken";
 import { Schema } from "mongoose";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const generateOtp = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -23,6 +26,7 @@ export const generateOtp = asyncErrorHandler(
                 name: "",
                 email: "",
                 isSubscribed: false,
+                profileImgUrl: process.env.defaultProfileImg as string,
                 favouriteAnime: [],
                 watchList: []
             })

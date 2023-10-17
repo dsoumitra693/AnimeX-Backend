@@ -5,6 +5,9 @@ import { IRequest } from "../middleware/authenticate";
 import { uploadImage } from "../utils/imageUpload";
 import { v4 as uuidv4 } from 'uuid';
 import { nullCheck } from "../nullCheck";
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const updateUserDetails = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
@@ -110,21 +113,20 @@ export const uploadProfileImg = asyncErrorHandler(
         const profileImg = req.body.profileImg as string
         const imgId = uuidv4()
         let imgUrl: string
-        if (!!profileImg) {
-            imgUrl = await uploadImage(profileImg, imgId)
-            let user: IUser | null = await User.findOne({ _id: userId })
-            if (user == null) return res.status(403).send({ msg: "User not found" })
-            user.profileImgUrl = imgUrl
-            user?.save()
-            return res.send({ profileImg: imgUrl }).status(200)
-        }
-        res.send({ msg: "No image was sent" }).status(400)
+        imgUrl = await uploadImage(profileImg, imgId)
+        let user: IUser | null = await User.findOne({ _id: userId })
+        if (user == null) return res.status(403).send({ msg: "User not found" })
+        if (!!profileImg)
+            user = { ...user, profileImgUrl: imgUrl } as IUser
+
+        user?.save()
+        return res.send({ profileImg: imgUrl }).status(200)
     }
 )
 
 export const deleteProfileImg = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
-        const defaultProfileImg = "https://res.cloudinary.com/dkbzrakzu/image/upload/v1696572283/923e0b34-89fe-47a7-8270-54f8c1fd6f0c.png"
+        const defaultProfileImg = process.env.defaultProfileImg as string
         const userId = req.userId
         let user: IUser | null = await User.findOneAndUpdate(
             { _id: userId },
