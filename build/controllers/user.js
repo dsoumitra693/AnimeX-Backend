@@ -17,16 +17,17 @@ const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"
 const User_1 = __importDefault(require("../model/User"));
 const imageUpload_1 = require("../utils/imageUpload");
 const uuid_1 = require("uuid");
+const nullCheck_1 = require("../nullCheck");
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { name, email, isSubscribed, phone } = req.query;
-    let params = {
-        name, email, isSubscribed, phone
-    };
-    let user = yield User_1.default.findOneAndUpdate({ phone }, {
-        $set: params
+    const userId = req.userId;
+    const { name, email, isSubscribed, } = req.query;
+    let params = (0, nullCheck_1.nullCheck)({
+        name, email, isSubscribed
     });
+    let user = yield User_1.default.findOne({ _id: userId });
     if (user == null)
         return res.status(403).send({ msg: "User not found" });
+    user = Object.assign(Object.assign({}, user), params);
     user === null || user === void 0 ? void 0 : user.save();
     const userWithNoPass = Object.assign(Object.assign({}, user === null || user === void 0 ? void 0 : user.toObject()), { password: "" });
     res.send({ userWithNoPass }).status(200);
@@ -103,14 +104,14 @@ exports.uploadProfileImg = (0, asyncErrorHandler_1.default)((req, res, next) => 
     let imgUrl;
     if (!!profileImg) {
         imgUrl = yield (0, imageUpload_1.uploadImage)(profileImg, imgId);
+        let user = yield User_1.default.findOne({ _id: userId });
+        if (user == null)
+            return res.status(403).send({ msg: "User not found" });
+        user.profileImgUrl = imgUrl;
+        user === null || user === void 0 ? void 0 : user.save();
+        return res.send({ profileImg: imgUrl }).status(200);
     }
-    let user = yield User_1.default.findOneAndUpdate({ _id: userId }, {
-        $set: { profileImgUrl: imgUrl }
-    });
-    if (user == null)
-        return res.status(403).send({ msg: "User not found" });
-    user === null || user === void 0 ? void 0 : user.save();
-    res.send({ profileImg: imgUrl }).status(200);
+    res.send({ msg: "No image was sent" }).status(400);
 }));
 exports.deleteProfileImg = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const defaultProfileImg = "https://res.cloudinary.com/dkbzrakzu/image/upload/v1696572283/923e0b34-89fe-47a7-8270-54f8c1fd6f0c.png";

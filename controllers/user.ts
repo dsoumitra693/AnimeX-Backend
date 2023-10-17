@@ -4,20 +4,18 @@ import User, { IUser } from "../model/User";
 import { IRequest } from "../middleware/authenticate";
 import { uploadImage } from "../utils/imageUpload";
 import { v4 as uuidv4 } from 'uuid';
+import { nullCheck } from "../nullCheck";
 
 export const updateUserDetails = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
-        const { name, email, isSubscribed, phone } = req.query
-        let params = {
-            name, email, isSubscribed, phone
-        }
-        let user: IUser | null = await User.findOneAndUpdate(
-            { phone },
-            {
-                $set: params
-            })
+        const userId = req.userId
+        const { name, email, isSubscribed, } = req.query
+        let params = nullCheck({
+            name, email, isSubscribed
+        })
+        let user: IUser | null = await User.findOne({ _id: userId })
         if (user == null) return res.status(403).send({ msg: "User not found" })
-
+        user = { ...user, ...params }
         user?.save()
 
         const userWithNoPass = { ...user?.toObject(), password: "" }
@@ -111,19 +109,16 @@ export const uploadProfileImg = asyncErrorHandler(
         const userId = req.userId
         const profileImg = req.body.profileImg as string
         const imgId = uuidv4()
-        let imgUrl
+        let imgUrl: string
         if (!!profileImg) {
             imgUrl = await uploadImage(profileImg, imgId)
+            let user: IUser | null = await User.findOne({ _id: userId })
+            if (user == null) return res.status(403).send({ msg: "User not found" })
+            user.profileImgUrl = imgUrl
+            user?.save()
+            return res.send({ profileImg: imgUrl }).status(200)
         }
-        let user: IUser | null = await User.findOneAndUpdate(
-            { _id: userId },
-            {
-                $set: { profileImgUrl: imgUrl }
-            })
-        if (user == null) return res.status(403).send({ msg: "User not found" })
-
-        user?.save()
-        res.send({ profileImg: imgUrl }).status(200)
+        res.send({ msg: "No image was sent" }).status(400)
     }
 )
 
