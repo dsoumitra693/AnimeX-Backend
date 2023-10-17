@@ -28,7 +28,7 @@ export const generateOtp = asyncErrorHandler(
                 watchList: []
             })
             console.log(newUser)
-            // await newUser.save()
+            await newUser.save()
         } else {
             user.password = hashedOtp as string
             user?.save()

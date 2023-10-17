@@ -36,7 +36,7 @@ exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
             watchList: []
         });
         console.log(newUser);
-        // await newUser.save()
+        yield newUser.save();
     }
     else {
         user.password = hashedOtp;
