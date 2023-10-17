@@ -6,9 +6,7 @@ import asyncErrorHandler from "../utils/asyncErrorHandler";
 import createHttpError from 'http-errors';
 import { generateToken } from "../utils/authToken";
 import { Schema } from "mongoose";
-import dotenv from 'dotenv'
 
-dotenv.config()
 
 export const generateOtp = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -26,11 +24,11 @@ export const generateOtp = asyncErrorHandler(
                 name: "",
                 email: "",
                 isSubscribed: false,
-                profileImgUrl: process.env.defaultProfileImg as string,
                 favouriteAnime: [],
                 watchList: []
             })
-            await newUser.save()
+            console.log(newUser)
+            // await newUser.save()
         } else {
             user.password = hashedOtp as string
             user?.save()
@@ -60,7 +58,8 @@ export const verifyOtp = asyncErrorHandler(
                 phone: user?.phone,
                 isSubscribed: user?.isSubscribed,
                 favouriteAnime: user?.favouriteAnime,
-                watchList: user?.watchList
+                watchList: user?.watchList,
+                profileImgUrl: user?.profileImgUrl,
             }
             const token = await generateToken({ id: userObj.id }).catch(err => next(createHttpError(500, err)))
             return res.send({

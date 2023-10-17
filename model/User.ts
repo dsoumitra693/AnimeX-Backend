@@ -1,5 +1,7 @@
 import { Document, Schema, model } from "mongoose";
+import dotenv from 'dotenv'
 
+dotenv.config()
 export interface IUser extends Document {
     email: string;
     phone: string;
@@ -24,6 +26,7 @@ const userSchema = new Schema<IUser>({
     phone: { type: String, resquired: [true, "is require field"] },
     password: { type: String, resquired: [true, "is require field"] },
     isSubscribed: { type: Boolean, default: false },
+    profileImgUrl: { type: String, default: process.env.defaultProfileImg },
     favouriteAnime: [{
         name: String,
         animeId: String,

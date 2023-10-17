@@ -19,8 +19,6 @@ const User_1 = __importDefault(require("../model/User"));
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const http_errors_1 = __importDefault(require("http-errors"));
 const authToken_1 = require("../utils/authToken");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const phone = req.query.phone;
     const otp = (0, sendingSms_1.createOtp)();
@@ -34,11 +32,11 @@ exports.generateOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
             name: "",
             email: "",
             isSubscribed: false,
-            profileImgUrl: process.env.defaultProfileImg,
             favouriteAnime: [],
             watchList: []
         });
-        yield newUser.save();
+        console.log(newUser);
+        // await newUser.save()
     }
     else {
         user.password = hashedOtp;
@@ -62,7 +60,8 @@ exports.verifyOtp = (0, asyncErrorHandler_1.default)((req, res, next) => __await
             phone: user === null || user === void 0 ? void 0 : user.phone,
             isSubscribed: user === null || user === void 0 ? void 0 : user.isSubscribed,
             favouriteAnime: user === null || user === void 0 ? void 0 : user.favouriteAnime,
-            watchList: user === null || user === void 0 ? void 0 : user.watchList
+            watchList: user === null || user === void 0 ? void 0 : user.watchList,
+            profileImgUrl: user === null || user === void 0 ? void 0 : user.profileImgUrl,
         };
         const token = yield (0, authToken_1.generateToken)({ id: userObj.id }).catch(err => next((0, http_errors_1.default)(500, err)));
         return res.send({
