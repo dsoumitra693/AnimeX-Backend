@@ -2,9 +2,9 @@ import { Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
 import User, { IUser } from "../model/User";
 import { IRequest } from "../middleware/authenticate";
-import { uploadImage } from "../utils/imageUpload";
+// import { uploadImage } from "../utils/imageUpload";
 import { v4 as uuidv4 } from 'uuid';
-import { nullCheck } from "../nullCheck";
+import { filterNonNullValues } from "../utils/filterNonNullValues";
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -13,12 +13,12 @@ export const updateUserDetails = asyncErrorHandler(
     async (req: IRequest, res: Response, next: NextFunction) => {
         const userId = req.userId
         const { name, email, isSubscribed, } = req.query
-        let params = nullCheck({
+        let params = filterNonNullValues({
             name, email, isSubscribed
         })
         let user: IUser | null = await User.findOne({ _id: userId })
         if (user == null) return res.status(403).send({ msg: "User not found" })
-        user = { ...user, ...params }
+        user = { ...user, ...params } as IUser
         user?.save()
 
         const userWithNoPass = { ...user?.toObject(), password: "" }
@@ -113,7 +113,7 @@ export const uploadProfileImg = asyncErrorHandler(
         const profileImg = req.body.profileImg as string
         const imgId = uuidv4()
         let imgUrl: string
-        imgUrl = await uploadImage(profileImg, imgId)
+        imgUrl = '' //await uploadImage(profileImg, imgId)
         let user: IUser | null = await User.findOne({ _id: userId })
         if (user == null) return res.status(403).send({ msg: "User not found" })
         if (!!profileImg)

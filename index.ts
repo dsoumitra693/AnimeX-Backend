@@ -6,6 +6,7 @@ import userRouter from './routes/user'
 import { authenticate } from './middleware/authenticate'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
+import apiRouter from './routes/api'
 
 dotenv.config()
 const app = express()
@@ -28,11 +29,13 @@ app.use(bodyParser.urlencoded({
 // routes
 app.use("/auth", authRouter)
 app.use("/user", authenticate, userRouter)
+app.use("/api", apiRouter)
 
-app.get('/', (req, res) => res.send("Welcome to AnimeX-Server"))
+
+app.get('/', (_, res) => res.send("Welcome to AnimeX-Server"))
 
 // connect to db 
-connectToDB()
+// connectToDB()
 
 //app litening
 app.listen(port, () => console.log(`App listening on port ${port}!`))

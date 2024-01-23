@@ -15,15 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWatchList = exports.deleteWatchList = exports.deleteProfileImg = exports.uploadProfileImg = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const User_1 = __importDefault(require("../model/User"));
-const imageUpload_1 = require("../utils/imageUpload");
+// import { uploadImage } from "../utils/imageUpload";
 const uuid_1 = require("uuid");
-const nullCheck_1 = require("../nullCheck");
+const filterNonNullValues_1 = require("../utils/filterNonNullValues");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 exports.updateUserDetails = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
     const { name, email, isSubscribed, } = req.query;
-    let params = (0, nullCheck_1.nullCheck)({
+    let params = (0, filterNonNullValues_1.filterNonNullValues)({
         name, email, isSubscribed
     });
     let user = yield User_1.default.findOne({ _id: userId });
@@ -104,7 +104,7 @@ exports.uploadProfileImg = (0, asyncErrorHandler_1.default)((req, res, next) => 
     const profileImg = req.body.profileImg;
     const imgId = (0, uuid_1.v4)();
     let imgUrl;
-    imgUrl = yield (0, imageUpload_1.uploadImage)(profileImg, imgId);
+    imgUrl = ''; //await uploadImage(profileImg, imgId)
     let user = yield User_1.default.findOne({ _id: userId });
     if (user == null)
         return res.status(403).send({ msg: "User not found" });

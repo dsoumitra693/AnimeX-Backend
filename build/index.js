@@ -5,12 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const auth_1 = __importDefault(require("./routes/auth"));
-const db_1 = __importDefault(require("./utils/db"));
 const cors_1 = __importDefault(require("cors"));
 const user_1 = __importDefault(require("./routes/user"));
 const authenticate_1 = require("./middleware/authenticate");
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
+const api_1 = __importDefault(require("./routes/api"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 5000;
@@ -30,8 +30,9 @@ app.use(body_parser_1.default.urlencoded({
 // routes
 app.use("/auth", auth_1.default);
 app.use("/user", authenticate_1.authenticate, user_1.default);
-app.get('/', (req, res) => res.send("Welcome to AnimeX-Server"));
+app.use("/api", api_1.default);
+app.get('/', (_, res) => res.send("Welcome to AnimeX-Server"));
 // connect to db 
-(0, db_1.default)();
+// connectToDB()
 //app litening
 app.listen(port, () => console.log(`App listening on port ${port}!`));
