@@ -16,15 +16,7 @@
         "express-jwt": "^8.4.1",
         "jsonwebtoken": "^9.0.1",
         "mongoose": "^7.4.1",
-        "uuid": "^9.0.1"
-    },
-    "scripts": {
-        "start": "tsc && cd build && node index",
-        "dev": "tsc && nodemon index.ts",
-        "build": "rimraf build && tsc",
-        "ts.check": "tsc --project tsconfig.json",
-        "add-build": "git add build",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "uuid": "^9.0.1",
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.13",
         "@types/express": "^4.17.17",
@@ -34,6 +26,14 @@
         "rimraf": "^5.0.1",
         "ts-node": "^10.9.1",
         "typescript": "^5.1.6"
+    },
+    "scripts": {
+        "start": "tsc && cd build && node index",
+        "dev": "tsc && nodemon index.ts",
+        "build": "rimraf build && tsc",
+        "ts.check": "tsc --project tsconfig.json",
+        "add-build": "git add build",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "pre-commit": [
         "ts.check",
