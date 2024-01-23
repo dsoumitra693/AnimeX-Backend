@@ -35,7 +35,7 @@ app.use("/api", apiRouter)
 app.get('/', (_, res) => res.send("Welcome to AnimeX-Server"))
 
 // connect to db 
-// connectToDB()
+connectToDB()
 
 //app litening
 app.listen(port, () => console.log(`App listening on port ${port}!`))
