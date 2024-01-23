@@ -19,9 +19,9 @@
         "uuid": "^9.0.1"
     },
     "scripts": {
-        "start": "tsc && cd build && node index",
+        "start": "node build/index",
         "dev": "tsc && nodemon index.ts",
-        "build": "rimraf build && tsc",
+        "build": "tsc",
         "ts.check": "tsc --project tsconfig.json",
         "add-build": "git add build",
         "test": "echo \"Error: no test specified\" && exit 1"
