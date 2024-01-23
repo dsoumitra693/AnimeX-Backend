@@ -18,7 +18,7 @@ const http_errors_1 = __importDefault(require("http-errors"));
 dotenv_1.default.config();
 const connectToDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const uri = process.env.MONGO_URI;
+        const uri = process.env.MONGODB_URI;
         yield mongoose_1.default.connect(uri);
         console.log("connected to mongodb");
     }
