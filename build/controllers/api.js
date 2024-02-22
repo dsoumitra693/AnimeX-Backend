@@ -13,33 +13,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.mediaInfo = exports.streamUrls = exports.searchMedia = void 0;
-const extensions_1 = require("@consumet/extensions");
-const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const http_errors_1 = __importDefault(require("http-errors"));
 const axios_1 = __importDefault(require("axios"));
-const API_URL = "https://consumet-api-951q.onrender.com";
-const flixhq = new extensions_1.MOVIES.FlixHQ();
+const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
+const providerUrl = "https://consumet-mauve.vercel.app/movies/flixhq/";
 exports.searchMedia = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let { mediaName } = req.params;
-    let response = yield axios_1.default.get(`https://consumet-api-951q.onrender.com/movies/flixhq/${mediaName}?page=1`);
-    console.log(response.data);
-    if (response.data == null)
-        return next((0, http_errors_1.default)(404, 'Movie not found'));
-    res.send(response.data);
+    let url = `${providerUrl}/${mediaName}`;
+    let response = yield axios_1.default.get(url);
+    res.send(response.data).status(200);
 }));
 exports.streamUrls = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let { episodeId, mediaId } = req.query;
-    let response = yield axios_1.default.get(`https://consumet-api-951q.onrender.com/movies/flixhq/watch?episodeId=${episodeId}&mediaId=${mediaId}`);
-    console.log(response.data);
-    if (response.data == null)
-        return next((0, http_errors_1.default)(404, 'Movie not found'));
-    res.send(response.data);
+    let episodeId = req.body.episodeId;
+    let mediaId = req.body.mediaId;
+    let url = `${providerUrl}watch?episodeId=${episodeId}&mediaId=${mediaId}&server=mixdrop`;
+    res.sendStatus(200);
 }));
 exports.mediaInfo = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let { id } = req.body.params;
-    let response = yield axios_1.default.get(`https://consumet-api-951q.onrender.com/movies/flixhq/info?id=${id}`);
-    console.log(response.data);
-    if (response.data == null)
-        return next((0, http_errors_1.default)(404, 'Movie not found'));
-    res.send(response.data);
+    let { id } = req.body;
+    let url = `${providerUrl}info?id=${id}`;
+    const response = yield axios_1.default.get(url);
+    res.status(200).send(response.data);
 }));

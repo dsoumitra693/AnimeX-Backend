@@ -7,6 +7,7 @@ import { authenticate } from './middleware/authenticate'
 import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import apiRouter from './routes/api'
+import proxyRouter from './routes/proxy'
 
 dotenv.config()
 const app = express()
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({
 app.use("/auth", authRouter)
 app.use("/user", authenticate, userRouter)
 app.use("/api", apiRouter)
+app.use("/proxy", proxyRouter)
 
 
 app.get('/', (_, res) => res.send("Welcome to AnimeX-Server"))

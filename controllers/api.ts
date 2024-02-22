@@ -1,37 +1,32 @@
-import { MOVIES } from "@consumet/extensions";
+import axios from "axios";
 import asyncErrorHandler from "../utils/asyncErrorHandler";
 import { NextFunction, Request, Response } from "express";
 import createHttpError from 'http-errors';
-import axios from "axios";
 
-const API_URL = "https://consumet-api-951q.onrender.com"
+const providerUrl = "https://consumet-mauve.vercel.app/movies/flixhq/"
 
-
-const flixhq = new MOVIES.FlixHQ();
-export const searchMedia = asyncErrorHandler( 
+export const searchMedia = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-        let {mediaName} = req.params
-        let response = await axios.get(`https://consumet-api-951q.onrender.com/movies/flixhq/${mediaName}?page=1`)
+        let { mediaName } = req.params
+        let url = `${providerUrl}/${mediaName}`
+        let response = await axios.get(url)
 
-        console.log(response.data)
-        if(response.data == null) return next(createHttpError(404, 'Movie not found'));
-        res.send(response.data)
-})
-export const streamUrls = asyncErrorHandler( 
+        res.send(response.data).status(200)
+    })
+export const streamUrls = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-        let {episodeId, mediaId} = req.query
-        let response = await axios.get(`https://consumet-api-951q.onrender.com/movies/flixhq/watch?episodeId=${episodeId}&mediaId=${mediaId}`)
+        let episodeId = req.body.episodeId as string
+        let mediaId = req.body.mediaId as string
 
-        console.log(response.data)
-        if(response.data == null) return next(createHttpError(404, 'Movie not found'));
-        res.send(response.data)
-})
+        let url = `${providerUrl}watch?episodeId=${episodeId}&mediaId=${mediaId}&server=mixdrop`
+
+
+        res.sendStatus(200)
+    })
 export const mediaInfo = asyncErrorHandler( 
     async (req: Request, res: Response, next: NextFunction) => {
-        let {id} = req.body.params
-        let response = await axios.get(`https://consumet-api-951q.onrender.com/movies/flixhq/info?id=${id}`)
-
-        console.log(response.data)
-        if(response.data == null) return next(createHttpError(404, 'Movie not found'));
-        res.send(response.data)
-})
+        let { id } = req.body
+        let url = `${providerUrl}info?id=${id}`
+        const response = await axios.get(url)
+        res.status(200).send(response.data)
+    })
