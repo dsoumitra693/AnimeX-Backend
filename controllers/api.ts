@@ -20,8 +20,8 @@ export const streamUrls = asyncErrorHandler(
 
         let url = `${providerUrl}watch?episodeId=${episodeId}&mediaId=${mediaId}&server=mixdrop`
 
-
-        res.sendStatus(200)
+        const response = await axios.get(url)
+        res.status(200).send(response.data)
     })
 export const mediaInfo = asyncErrorHandler( 
     async (req: Request, res: Response, next: NextFunction) => {

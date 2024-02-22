@@ -26,7 +26,8 @@ exports.streamUrls = (0, asyncErrorHandler_1.default)((req, res, next) => __awai
     let episodeId = req.body.episodeId;
     let mediaId = req.body.mediaId;
     let url = `${providerUrl}watch?episodeId=${episodeId}&mediaId=${mediaId}&server=mixdrop`;
-    res.sendStatus(200);
+    const response = yield axios_1.default.get(url);
+    res.status(200).send(response.data);
 }));
 exports.mediaInfo = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let { id } = req.body;
