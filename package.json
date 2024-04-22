@@ -21,16 +21,11 @@
     "scripts": {
         "start": "nodemon build/index",
         "dev": "tsc && nodemon index.ts",
-        "build": "tsc",
         "ts.check": "tsc --project tsconfig.json",
-        "add-build": "git add build",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "pre-commit": [
-        "ts.check",
-        "build",
-        "add-build"
-    ],
+        "ts.check"    ],
     "devDependencies": {
         "@types/bcrypt": "^5.0.0",
         "@types/cors": "^2.8.13",
