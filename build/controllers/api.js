@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.mediaInfo = exports.streamUrls = exports.searchMedia = void 0;
 const axios_1 = __importDefault(require("axios"));
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
-const providerUrl = "https://consumet-mauve.vercel.app/movies/flixhq/";
+const providerUrl = process.env.PROVIDER_URL;
 exports.searchMedia = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     let { mediaName } = req.params;
     let url = `${providerUrl}/${mediaName}`;
@@ -23,15 +23,14 @@ exports.searchMedia = (0, asyncErrorHandler_1.default)((req, res, next) => __awa
     res.send(response.data).status(200);
 }));
 exports.streamUrls = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let episodeId = req.body.episodeId;
-    let mediaId = req.body.mediaId;
-    let url = `${providerUrl}watch?episodeId=${episodeId}&mediaId=${mediaId}&server=mixdrop`;
+    let { episodeId } = req.query;
+    let url = `${providerUrl}/watch/${episodeId}`;
     const response = yield axios_1.default.get(url);
     res.status(200).send(response.data);
 }));
 exports.mediaInfo = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    let { id } = req.body;
-    let url = `${providerUrl}info?id=${id}`;
+    let { id } = req.query;
+    let url = `${providerUrl}/info/${id}`;
     const response = yield axios_1.default.get(url);
     res.status(200).send(response.data);
 }));

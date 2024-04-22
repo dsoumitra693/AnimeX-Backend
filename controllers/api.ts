@@ -1,9 +1,8 @@
 import axios from "axios";
 import asyncErrorHandler from "../utils/asyncErrorHandler";
 import { NextFunction, Request, Response } from "express";
-import createHttpError from 'http-errors';
 
-const providerUrl = "https://consumet-mauve.vercel.app/movies/flixhq/"
+const providerUrl = process.env.PROVIDER_URL
 
 export const searchMedia = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -15,18 +14,17 @@ export const searchMedia = asyncErrorHandler(
     })
 export const streamUrls = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-        let episodeId = req.body.episodeId as string
-        let mediaId = req.body.mediaId as string
+        let { episodeId } = req.query
 
-        let url = `${providerUrl}watch?episodeId=${episodeId}&mediaId=${mediaId}&server=mixdrop`
+        let url = `${providerUrl}/watch/${episodeId}`
 
         const response = await axios.get(url)
         res.status(200).send(response.data)
     })
-export const mediaInfo = asyncErrorHandler( 
+export const mediaInfo = asyncErrorHandler(
     async (req: Request, res: Response, next: NextFunction) => {
-        let { id } = req.body
-        let url = `${providerUrl}info?id=${id}`
+        let { id } = req.query
+        let url = `${providerUrl}/info/${id}`
         const response = await axios.get(url)
         res.status(200).send(response.data)
     })

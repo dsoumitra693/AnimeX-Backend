@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWatchList = exports.deleteWatchList = exports.deleteProfileImg = exports.uploadProfileImg = exports.updateWatchList = exports.getFavAnime = exports.deleteFavAnime = exports.updateFavAnime = exports.getUserDetails = exports.updateUserDetails = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../utils/asyncErrorHandler"));
 const User_1 = __importDefault(require("../model/User"));
-// import { uploadImage } from "../utils/imageUpload";
 const uuid_1 = require("uuid");
 const filterNonNullValues_1 = require("../utils/filterNonNullValues");
 const dotenv_1 = __importDefault(require("dotenv"));

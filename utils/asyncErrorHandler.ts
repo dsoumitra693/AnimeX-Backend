@@ -6,7 +6,7 @@ const asyncErrorHandler = (
 ) => {
     return (req: Request, res: Response, next: NextFunction) =>
         func(req, res, next).catch(error => {
-            let statusCode = 400
+            let statusCode = 500
             let message =
                 error instanceof Error ? error.message : 'Server Error';
             next(createHttpError(statusCode, message));

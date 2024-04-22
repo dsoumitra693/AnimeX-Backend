@@ -2,7 +2,6 @@ import { Response, NextFunction } from "express";
 import asyncErrorHandler from "../utils/asyncErrorHandler"
 import User, { IUser } from "../model/User";
 import { IRequest } from "../middleware/authenticate";
-// import { uploadImage } from "../utils/imageUpload";
 import { v4 as uuidv4 } from 'uuid';
 import { filterNonNullValues } from "../utils/filterNonNullValues";
 import dotenv from 'dotenv'
